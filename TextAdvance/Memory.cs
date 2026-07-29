@@ -17,7 +17,7 @@ public unsafe class Memory
     {
         if (canvas < 1024)
         {
-            DuoLog.Error($"TextAdvance anti-crash: canvas={canvas:X16} invalid data detected. Please report to developer.");
+            DuoLog.Error($"TextAdvance 防崩潰保護：偵測到 canvas={canvas:X16} 的資料無效，請回報給開發者。");
             return;
         }
         var emptyBytes = stackalloc byte[50];

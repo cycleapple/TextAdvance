@@ -33,17 +33,17 @@ public unsafe class MoveManager
     public void MoveToFlag()
     {
         if (!Player.Available) return;
-        if (AgentMap.Instance()->IsFlagMarkerSet == false)
+        if (AgentMap.Instance()->FlagMarkerCount == 0)
         {
-            DuoLog.Warning($"Flag is not set");
+            DuoLog.Warning("尚未設定地圖旗標");
             return;
         }
-        if (AgentMap.Instance()->FlagMapMarker.TerritoryId != Svc.ClientState.TerritoryType)
+        if (AgentMap.Instance()->FlagMapMarkers[0].TerritoryId != Svc.ClientState.TerritoryType)
         {
-            DuoLog.Warning($"Flag is in different zone than current");
+            DuoLog.Warning("地圖旗標位於其他區域");
             return;
         }
-        var m = AgentMap.Instance()->FlagMapMarker;
+        var m = AgentMap.Instance()->FlagMapMarkers[0];
         var pos = P.NavmeshManager.PointOnFloor(new(m.XFloat, 1024, m.YFloat), false, 5);
         var iterations = 0;
         if (pos == null)
@@ -61,11 +61,11 @@ public unsafe class MoveManager
         }
         if (pos == null)
         {
-            DuoLog.Error($"Failed to move to flag");
+            DuoLog.Error("無法移動至地圖旗標");
             return;
         }
         this.EnqueueMoveAndInteract(new(pos.Value, 0, true), 3f);
-        this.Log($"Nav to flag {pos.Value:F1}, {iterations} corrections");
+        this.Log($"導航至旗標 {pos.Value:F1}，修正 {iterations} 次");
     }
 
     public void MoveTo2DPoint(MoveData data, float distance)
@@ -87,17 +87,17 @@ public unsafe class MoveManager
         }
         if (pos == null)
         {
-            DuoLog.Error($"Failed to move to 2d point");
+            DuoLog.Error("無法移動至 2D 座標");
             return;
         }
         data.Position = pos.Value;
         this.EnqueueMoveAndInteract(data, distance);
-        this.Log($"Nav to 2d point {pos.Value:F1}, {iterations} corrections, distance={distance:F1}");
+        this.Log($"導航至 2D 座標 {pos.Value:F1}，修正 {iterations} 次，距離={distance:F1}");
     }
     public void MoveTo3DPoint(MoveData data, float distance)
     {
         this.EnqueueMoveAndInteract(data, distance);
-        this.Log($"Nav to 3d point {data.Position:F1}, distance={distance:F1}");
+        this.Log($"導航至 3D 座標 {data.Position:F1}，距離={distance:F1}");
     }
 
     public void MoveToQuest()
@@ -112,7 +112,7 @@ public unsafe class MoveManager
         if (obj != null)
         {
             this.EnqueueMoveAndInteract(new(obj.Position, obj.DataId, false), 3f);
-            this.Log($"Precise nav: {obj.Name}/{obj.DataId:X8}");
+            this.Log($"精確導航：{obj.Name}/{obj.DataId:X8}");
         }
         else
         {
@@ -123,7 +123,7 @@ public unsafe class MoveManager
                 {
                     var marker = markers.OrderBy(x => Vector3.Distance(x, Player.Object.Position)).First();
                     this.EnqueueMoveAndInteract(new(marker, 0, false), 3f);
-                    this.Log($"Non-precise nav: {marker:F1}");
+                    this.Log($"非精確導航：{marker:F1}");
                 }
             }
         }
@@ -287,7 +287,7 @@ public unsafe class MoveManager
                 {
                     data.Position = obj.Position;
                     data.DataID = obj.DataId;
-                    this.Log($"Correction to MTQ object: {obj.Name}/{obj.DataId:X8}");
+                    this.Log($"修正至任務物件：{obj.Name}/{obj.DataId:X8}");
                     this.MoveToPosition(data, distance);
                 }
                 else
@@ -300,7 +300,7 @@ public unsafe class MoveManager
                             {
                                 data.Position = x.Position;
                                 data.DataID = x.DataId;
-                                this.Log($"Correction to non-MTQ object: {x.Name}/{x.DataId:X8}");
+                                this.Log($"修正至非任務物件：{x.Name}/{x.DataId:X8}");
                                 this.MoveToPosition(data, distance);
                                 break;
                             }
@@ -315,13 +315,13 @@ public unsafe class MoveManager
             var cnt = this.Unstucks.Count(x => Environment.TickCount64 - x < 10000);
             if (cnt < 5)
             {
-                this.Log($"Stuck, rebuilding path ({cnt + 1}/5)");
+                this.Log($"似乎卡住，正在重建路徑（{cnt + 1}/5）");
                 this.MoveToPosition(data, distance);
                 this.Unstucks.PushFront(Environment.TickCount64);
             }
             else
             {
-                DuoLog.Error($"Stuck, move manually");
+                DuoLog.Error("移動卡住，請手動移動");
                 P.NavmeshManager.Stop();
                 return null;
             }
@@ -347,7 +347,7 @@ public unsafe class MoveManager
         {
             if (Vector2.Distance(Player.Object.Position.ToVector2(), pos.ToVector2()) < distance)
             {
-                this.Log("Stopped by 2D distance");
+                this.Log("已依 2D 距離停止");
                 return true;
             }
         }
@@ -387,14 +387,14 @@ public unsafe class MoveManager
         {
             if (Player.Position.X < 24.5f && data.Position.X > 24.5f)
             {
-                this.Log("Special adjustment: Entrance to the Solar at The Waking Sands");
+                this.Log("特殊路徑修正：沙之家太陽神密石之間入口");
                 //new(2001715, 212, ObjectKind.EventObj, new(23.2f, 2.1f, -0.0f)), //Entrance to the Solar at The Waking Sands
                 data.DataID = 2001715;
                 data.Position = new(23.2f, 2.1f, -0.0f);
             }
             else if (Player.Position.X > 24.5f && data.Position.X < 24.5f)
             {
-                this.Log("Special adjustment: Exit to the Waking Sands at The Waking Sands");
+                this.Log("特殊路徑修正：沙之家出口");
                 //new(2001717, 212, ObjectKind.EventObj, new(25.5f, 2.1f, -0.0f)), //Exit to the Waking Sands at The Waking Sands
                 data.DataID = 2001717;
                 data.Position = new(25.5f, 2.1f, -0.0f);
@@ -404,14 +404,14 @@ public unsafe class MoveManager
         {
             if (Player.Position.Z < -28.0f && data.Position.Z > -28.0f)
             {
-                this.Log("Special adjustment: Exit to the Rising Stones at The Rising Stones");
+                this.Log("特殊路徑修正：石之家出口");
                 //new(2002880, 351, ObjectKind.EventObj, new(-0.0f, -1.0f, -29.3f)), //Exit to the Rising Stones at The Rising Stones
                 data.DataID = 2002880;
                 data.Position = new(-0.0f, -1.0f, -29.3f);
             }
             else if (Player.Position.Z > -28.0f && data.Position.Z < -28.0f)
             {
-                this.Log("Special adjustment: Entrance to the Solar at The Rising Stones");
+                this.Log("特殊路徑修正：石之家太陽神密石之間入口");
                 //new(2002878, 351, ObjectKind.EventObj, new(-0.0f, -1.0f, -26.8f)), //Entrance to the Solar at The Rising Stones
                 data.DataID = 2002878;
                 data.Position = new(-0.0f, -1.0f, -26.8f);

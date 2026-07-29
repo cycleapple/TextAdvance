@@ -36,7 +36,7 @@ namespace TextAdvance.Executors
                     {
                         if (Svc.Data.GetExcelSheet<Item>().GetRowOrDefault(x.ItemID) == null)
                         {
-                            DuoLog.Warning($"Encountered unknown item id: {x.ItemID}. Selecting cancelled. Please report this error with logs and screenshot.");
+                            DuoLog.Warning($"遇到未知物品 ID：{x.ItemID}。已取消選擇，請附上日誌與截圖回報此錯誤。");
                             return;
                         }
                     }
@@ -46,7 +46,7 @@ namespace TextAdvance.Executors
                             if (x == PickRewardMethod.Gil_sacks && TrySelectGil(r.OptionalRewards, out var index))
                             {
                                 PluginLog.Information($"Selecting {index} = {r.OptionalRewards[index].Name} because it's gil sack");
-                                if (!C.PickRewardSilent) ChatPrinter.Green($"[TextAdvance] Auto-selected optional reward {index + 1}/{r.OptionalRewards.Count}: {r.OptionalRewards[index].Name} (gil)");
+                                if (!C.PickRewardSilent) ChatPrinter.Green($"[TextAdvance] 已自動選擇額外報酬 {index + 1}/{r.OptionalRewards.Count}：{r.OptionalRewards[index].Name}（金幣）");
                                 S.Memory.PickRewardItemUnsafe((nint)canvas, index);
                                 return;
                             }
@@ -55,7 +55,7 @@ namespace TextAdvance.Executors
                             if (x == PickRewardMethod.Highest_vendor_value && TrySelectHighestVendorValue(r.OptionalRewards, out var index))
                             {
                                 PluginLog.Information($"Selecting {index} = {r.OptionalRewards[index].Name} because it's highest vendor value");
-                                if (!C.PickRewardSilent) ChatPrinter.Green($"[TextAdvance] Auto-selected optional reward {index + 1}/{r.OptionalRewards.Count}: {r.OptionalRewards[index].Name} (highest value)");
+                                if (!C.PickRewardSilent) ChatPrinter.Green($"[TextAdvance] 已自動選擇額外報酬 {index + 1}/{r.OptionalRewards.Count}：{r.OptionalRewards[index].Name}（出售價格最高）");
                                 S.Memory.PickRewardItemUnsafe((nint)canvas, index);
                                 return;
                             }
@@ -64,7 +64,7 @@ namespace TextAdvance.Executors
                             if (x == PickRewardMethod.Gear_coffer && TrySelectCoffer(r.OptionalRewards, out var index))
                             {
                                 PluginLog.Information($"Selecting {index} = {r.OptionalRewards[index].Name} because it's coffer");
-                                if (!C.PickRewardSilent) ChatPrinter.Green($"[TextAdvance] Auto-selected optional reward {index + 1}/{r.OptionalRewards.Count}: {r.OptionalRewards[index].Name} (coffer)");
+                                if (!C.PickRewardSilent) ChatPrinter.Green($"[TextAdvance] 已自動選擇額外報酬 {index + 1}/{r.OptionalRewards.Count}：{r.OptionalRewards[index].Name}（裝備箱）");
                                 S.Memory.PickRewardItemUnsafe((nint)canvas, index);
                                 return;
                             }
@@ -73,7 +73,7 @@ namespace TextAdvance.Executors
                             if (x == PickRewardMethod.Equipable_item_for_current_job && TrySelectCurrentJobItem(r.OptionalRewards, out var index))
                             {
                                 PluginLog.Information($"Selecting {index} = {r.OptionalRewards[index].Name} because it's current job item");
-                                if (!C.PickRewardSilent) ChatPrinter.Green($"[TextAdvance] Auto-selected optional reward {index + 1}/{r.OptionalRewards.Count}: {r.OptionalRewards[index].Name} (equipable)");
+                                if (!C.PickRewardSilent) ChatPrinter.Green($"[TextAdvance] 已自動選擇額外報酬 {index + 1}/{r.OptionalRewards.Count}：{r.OptionalRewards[index].Name}（目前職業可裝備）");
                                 S.Memory.PickRewardItemUnsafe((nint)canvas, index);
                                 return;
                             }
@@ -82,7 +82,7 @@ namespace TextAdvance.Executors
                             if (x == PickRewardMethod.High_quality_gear && TrySelectHighQualityGear(r.OptionalRewards, out var index))
                             {
                                 PluginLog.Information($"Selecting {index} = {r.OptionalRewards[index].Name} because it's high quality gear item");
-                                if (!C.PickRewardSilent) ChatPrinter.Green($"[TextAdvance] Auto-selected optional reward {index + 1}/{r.OptionalRewards.Count}: {r.OptionalRewards[index].Name} (HQ gear item)");
+                                if (!C.PickRewardSilent) ChatPrinter.Green($"[TextAdvance] 已自動選擇額外報酬 {index + 1}/{r.OptionalRewards.Count}：{r.OptionalRewards[index].Name}（HQ 裝備）");
                                 S.Memory.PickRewardItemUnsafe((nint)canvas, index);
                                 return;
                             }
@@ -90,7 +90,7 @@ namespace TextAdvance.Executors
                     }
                     var rand = Random.Next(r.OptionalRewards.Count);
                     PluginLog.Information($"Selecting random reward: {rand} - {r.OptionalRewards[rand].Name}");
-                    if (!C.PickRewardSilent) ChatPrinter.Green($"[TextAdvance] Auto-selected optional reward {rand + 1}/{r.OptionalRewards.Count}: {r.OptionalRewards[rand].Name} (random)");
+                    if (!C.PickRewardSilent) ChatPrinter.Green($"[TextAdvance] 已自動選擇額外報酬 {rand + 1}/{r.OptionalRewards.Count}：{r.OptionalRewards[rand].Name}（隨機）");
                     S.Memory.PickRewardItemUnsafe((nint)canvas, rand);
                     return;
                 }

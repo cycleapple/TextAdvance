@@ -22,12 +22,12 @@ public class ConfigGui : ConfigWindow
         {
             PatreonBanner.DrawRight();
             ImGuiEx.EzTabBar("TextAdvanceTab", PatreonBanner.Text,
-                ("General config", TabConfig.Draw, null, true),
-                ("Target indicators", TabSplatoon.Draw, null, true),
-                ("Auto-enable", TabChars.Draw, null, true),
-                ("Per area config", TabTerritory.Draw, null, true),
+                ("一般設定", TabConfig.Draw, null, true),
+                ("目標指示器", TabSplatoon.Draw, null, true),
+                ("自動啟用", TabChars.Draw, null, true),
+                ("區域個別設定", TabTerritory.Draw, null, true),
                 InternalLog.ImGuiTab(),
-                ("Debug", TabDebug.Draw, ImGuiColors.DalamudGrey3, true)
+                ("除錯", TabDebug.Draw, ImGuiColors.DalamudGrey3, true)
                 );
         }
         ImGui.EndChild();

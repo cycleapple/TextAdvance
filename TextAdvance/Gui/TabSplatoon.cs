@@ -4,33 +4,33 @@
     {
         public static void Draw()
         {
-            ImGuiEx.TextWrapped("These functions require Splatoon plugin installed and enabled.");
+            ImGuiEx.TextWrapped("這些功能需要安裝並啟用 Splatoon 插件。");
             if (Svc.PluginInterface.InstalledPlugins.TryGetFirst(x => x.InternalName == "Splatoon", out var plugin))
             {
                 if (plugin.IsLoaded)
                 {
-                    ImGuiEx.TextWrapped(EColor.Green, $"You have Splatoon v{plugin.Version} installed and enabled.");
+                    ImGuiEx.TextWrapped(EColor.Green, $"已安裝並啟用 Splatoon v{plugin.Version}。");
                 }
                 else
                 {
-                    ImGuiEx.TextWrapped(EColor.Red, $"You have Splatoon v{plugin.Version} installed but not enabled.");
+                    ImGuiEx.TextWrapped(EColor.Red, $"已安裝 Splatoon v{plugin.Version}，但尚未啟用。");
                 }
             }
             else
             {
-                ImGuiEx.TextWrapped(EColor.Red, $"You do not have Splatoon installed.");
-                if (ImGui.Button("Get Splatoon")) ShellStart("https://puni.sh/plugin/Splatoon");
+                ImGuiEx.TextWrapped(EColor.Red, "尚未安裝 Splatoon。");
+                if (ImGui.Button("取得 Splatoon")) ShellStart("https://puni.sh/plugin/Splatoon");
             }
-            ImGui.Checkbox($"Display quest target indicators", ref C.MainConfig.QTIQuestEnabled);
-            ImGui.ColorEdit4($"Quest target indicator color", ref C.MainConfig.QTIQuestColor, ImGuiColorEditFlags.NoInputs);
-            ImGui.Checkbox($"Quest target indicator tether", ref C.MainConfig.QTIQuestTether);
+            ImGui.Checkbox("顯示任務目標指示器", ref C.MainConfig.QTIQuestEnabled);
+            ImGui.ColorEdit4("任務目標指示器顏色", ref C.MainConfig.QTIQuestColor, ImGuiColorEditFlags.NoInputs);
+            ImGui.Checkbox("任務目標指示器連線", ref C.MainConfig.QTIQuestTether);
             ImGuiEx.SetNextItemWidthScaled(60f);
-            ImGui.DragFloat($"Quest target indicator thickness", ref C.MainConfig.QTIQuestThickness, 0.02f, 1f, 10f);
+            ImGui.DragFloat("任務目標指示器粗細", ref C.MainConfig.QTIQuestThickness, 0.02f, 1f, 10f);
             ImGui.Separator();
-            ImGui.Checkbox($"Enable event object finder", ref C.EObjFinder);
-            ImGui.Checkbox($"Enable event NPC finder", ref C.ENpcFinder);
+            ImGui.Checkbox("啟用事件物件搜尋器", ref C.EObjFinder);
+            ImGui.Checkbox("啟用事件 NPC 搜尋器", ref C.ENpcFinder);
             ImGuiEx.SetNextItemWidthScaled(150f);
-            ImGuiEx.EnumCombo("Display only while holding key", ref C.FinderKey);
+            ImGuiEx.EnumCombo("僅在按住按鍵時顯示", ref C.FinderKey);
         }
     }
 }

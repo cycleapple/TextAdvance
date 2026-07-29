@@ -107,7 +107,7 @@ public static unsafe class Utils
             }
             if (Environment.TickCount64 - time > 3000)
             {
-                DuoLog.Error($"Pathfinding took {Environment.TickCount64 - time}ms > 3000, discarding");
+                DuoLog.Error($"尋路耗時 {Environment.TickCount64 - time} 毫秒，超過 3000 毫秒，已捨棄結果");
             }
             else
             {

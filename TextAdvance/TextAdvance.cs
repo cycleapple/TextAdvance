@@ -68,8 +68,8 @@ public unsafe class TextAdvance : IDalamudPlugin
                 toggles TextAdvance plugin.\n/at y|yes|e|enable - turns on TextAdvance.
                 /at n|no|d|disable - turns off TextAdvance.
                 /at c|config|s|settings - opens TextAdvance settings.
-                /at g - toggles visual quest target markers
-                /at mtq - move to the first available quest location, if present (requires navmesh integration to be enabled)
+                /at g - 切換任務目標標記顯示
+                /at mtq - 移動至第一個可用的任務地點（需要啟用 navmesh 整合）
                 /at mtqstop - cancel all pending movement tasks
                 /at mtf - move to flag
                 """
@@ -157,11 +157,11 @@ public unsafe class TextAdvance : IDalamudPlugin
             this.Config.QTIEnabled = !this.Config.QTIEnabled;
             if (this.Config.QTIEnabled)
             {
-                Notify.Info($"Quest target indicators enabled");
+                Notify.Info("已啟用任務目標指示器");
             }
             else
             {
-                Notify.Info($"Quest target indicators disabled");
+                Notify.Info("已停用任務目標指示器");
             }
         }
         else if (arguments.EqualsIgnoreCaseAny("mtq"))
@@ -186,7 +186,7 @@ public unsafe class TextAdvance : IDalamudPlugin
             this.Enabled = arguments.EqualsIgnoreCaseAny("enable", "e", "yes", "y") || (!arguments.EqualsIgnoreCaseAny("disable", "d", "no", "n") && !this.Enabled);
             if (!C.NotifyDisableManualState)
             {
-                Svc.Toasts.ShowQuest("Auto advance " + (this.Enabled ? "globally enabled" : "disabled (except custom territories)"),
+                Svc.Toasts.ShowQuest("自動推進" + (this.Enabled ? "已全域啟用" : "已停用（自訂區域除外）"),
                     new QuestToastOptions() { PlaySound = true, DisplayCheckmark = true });
             }
         }
@@ -230,7 +230,7 @@ public unsafe class TextAdvance : IDalamudPlugin
                     this.Enabled = true;
                     if (!C.NotifyDisableOnLogin)
                     {
-                        Notify.Success("Auto text advance has been automatically enabled on this character");
+                        Notify.Success("已為此角色自動啟用文字推進");
                     }
                 }
             }

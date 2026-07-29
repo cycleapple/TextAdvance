@@ -79,7 +79,7 @@ internal class Overlay : Window
         }
         else
         {
-            ImGuiEx.Text(ImGuiColors.DalamudRed, $"paused externally");
+            ImGuiEx.Text(ImGuiColors.DalamudRed, "已由外部暫停");
         }
 
         this.Position = ImGuiHelpers.MainViewport.Pos + new Vector2(ImGuiHelpers.MainViewport.Size.X / 2 - ImGui.GetWindowSize().X / 2, 0) - C.OverlayOffset;
