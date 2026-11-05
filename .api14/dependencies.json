@@ -9,7 +9,7 @@
     "path": "NightmareUI",
     "baseCommit": "28463f8c25fb167abccace2da98765ad23f0268b",
     "patch": "patches/71c63842f9d729a9.patch",
-    "sha256": "d611ee702d90ecf4b272f7e2b828323cd74354f2d78848b756dfdea34368df82"
+    "sha256": "979829d1a774de0560e8ad97f6f40eb9e84a6debea95a48a3f3238fc04920a71"
   },
   {
     "path": "ClickLib/lib/FFXIVClientStructs",
