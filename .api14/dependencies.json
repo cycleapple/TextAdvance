@@ -3,7 +3,7 @@
     "path": "ECommons",
     "baseCommit": "f2553bcd04034d258db62439abdfe8021d04c65b",
     "patch": "patches/e347001520b30beb.patch",
-    "sha256": "ebdba795893398500d3429cacdaa84c23d7586302db1a199040baba4c328c9d5"
+    "sha256": "ae4b6922ca0008960a1304f85cb014108a236ed49f1a1d6a8b183dcdc44c5733"
   },
   {
     "path": "NightmareUI",
