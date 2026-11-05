@@ -1,0 +1,20 @@
+[
+  {
+    "path": "ECommons",
+    "baseCommit": "f2553bcd04034d258db62439abdfe8021d04c65b",
+    "patch": "patches/e347001520b30beb.patch",
+    "sha256": "ebdba795893398500d3429cacdaa84c23d7586302db1a199040baba4c328c9d5"
+  },
+  {
+    "path": "NightmareUI",
+    "baseCommit": "28463f8c25fb167abccace2da98765ad23f0268b",
+    "patch": "patches/71c63842f9d729a9.patch",
+    "sha256": "d611ee702d90ecf4b272f7e2b828323cd74354f2d78848b756dfdea34368df82"
+  },
+  {
+    "path": "ClickLib/lib/FFXIVClientStructs",
+    "baseCommit": "23bfedf9343d36dd5f9e0588688ced5559f86dc3",
+    "patch": "patches/9ea89dff21da02a9.patch",
+    "sha256": "7bde68e6e4510d21c77cdf2577c93f1981c3a0bce44938454845fe61a9dac60a"
+  }
+]
